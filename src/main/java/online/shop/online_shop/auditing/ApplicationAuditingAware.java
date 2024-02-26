@@ -1,6 +1,7 @@
 package online.shop.online_shop.auditing;
 
 import online.shop.online_shop.entity.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public class ApplicationAuditingAware implements AuditorAware<Long> {
 
-
+    @NotNull
     @Override
     public Optional<Long> getCurrentAuditor() {
        Authentication authentication =
