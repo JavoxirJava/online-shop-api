@@ -39,19 +39,17 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getAllCategories() {
-        return new ApiResponse<>(categoryRepository.findAll().toString(), true);
+        return new ApiResponse<>(categoryRepository.findAll(), "", true);
     }
 
     public ApiResponse<?> deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) return new ApiResponse<>("Category not found", false);
-        else {
-            categoryRepository.deleteById(id);
-            return new ApiResponse<>("Category deleted", true);
-        }
+        categoryRepository.deleteById(id);
+        return new ApiResponse<>("Category deleted", true);
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
         if (!categoryRepository.existsById(id)) return new ApiResponse<>("Category not found", false);
-        else return new ApiResponse<>(categoryRepository.findById(id).toString(), true);
+        else
+            return new ApiResponse<>(categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found")), "get one category", true);
     }
 }
