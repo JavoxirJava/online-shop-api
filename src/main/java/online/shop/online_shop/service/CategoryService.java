@@ -3,8 +3,13 @@ package online.shop.online_shop.service;
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.CategoryDto;
 import online.shop.online_shop.entity.Category;
+import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoryService {
@@ -39,7 +44,10 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getAllCategories() {
-        return new ApiResponse<>(categoryRepository.findAll().toString(), true);
+        List<Category> allCategory = categoryRepository.getAllCategory();
+        return  ApiResponse.builder().body(
+                new ArrayList<>(allCategory.stream().map(Category::toString).toList())
+        ).build();
     }
 
     public ApiResponse<?> deleteCategory(Long id) {
@@ -52,10 +60,8 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            return new ApiResponse<>("Category not found", false);
-        }else {
-            return new ApiResponse<>(categoryRepository.findById(id).toString(), true);
-        }
+    Category category = categoryRepository.findById(id).orElseThrow(()
+            -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
+    return ApiResponse.builder().body(category).build();
     }
 }

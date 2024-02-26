@@ -2,6 +2,12 @@ package online.shop.online_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -9,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +37,34 @@ public class User {
 
     @ManyToOne
     private Role role;
+
+
+    private boolean accountNonExpired = true ;
+    private boolean accountNonLocked = true;
+    private boolean credentialNonExpired = true;
+    private boolean enabled;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.getRoleName().name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getPhoneNumber();
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialNonExpired();
+    }
 }

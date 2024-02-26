@@ -1,13 +1,15 @@
 package online.shop.online_shop.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import online.shop.online_shop.entity.Image;
+import org.springframework.core.io.Resource;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ImageDto {
 
     private Long id;
@@ -20,4 +22,10 @@ public class ImageDto {
 
     @NotNull(message = "Image size cannot be null")
     private Long size;
+
+    private Resource resource;
+    private Image image;
+
+    public ImageDto(Long id, String name, String contentType, Long size, Resource resource) {
+    }
 }
