@@ -3,8 +3,13 @@ package online.shop.online_shop.service;
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.CategoryDto;
 import online.shop.online_shop.entity.Category;
+import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoryService {
@@ -48,8 +53,9 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
-        if (!categoryRepository.existsById(id)) return new ApiResponse<>("Category not found", false);
-        else
-            return new ApiResponse<>(categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found")), "get one category", true);
+    Category category = categoryRepository.findById(id).orElseThrow(()
+            -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
+    return ApiResponse.builder().body(category).build();
+
     }
 }

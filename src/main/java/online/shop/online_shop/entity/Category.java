@@ -14,7 +14,5 @@ import online.shop.online_shop.entity.template.AbsNameEntity;
 @Entity
 public class Category extends AbsNameEntity {
 
-//    public Category(Long id, String name) {
-//        super(id, name);
-//    }
+
 }

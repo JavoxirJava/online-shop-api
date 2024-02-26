@@ -1,14 +1,14 @@
 plugins {
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'org.springframework.boot' version '3.2.3'
-    id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'online.shop'
+group = 'online-shop'
 version = '0.0.1-SNAPSHOT'
-
-java {
+java{
     sourceCompatibility = '17'
+
 }
 
 configurations {
@@ -19,19 +19,35 @@ configurations {
 
 repositories {
     mavenCentral()
+//    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.3'
-    compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'org.springframework.security:spring-security-core'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springdoc:springdoc-openapi-javadoc:1.6.9'
+    implementation 'com.squareup.okhttp3:okhttp'
+    implementation 'org.springdoc:springdoc-openapi-common:1.2.34'
+    implementation 'io.github.openfeign:feign-core:12.1'
+    implementation 'io.github.openfeign:feign-gson:12.1'
+    implementation 'org.apache.poi:poi:5.1.0'
+    implementation 'org.apache.commons:commons-imaging:1.0-alpha1'
+    implementation group: 'io.swagger', name: 'swagger-annotations', version: '2.0.0-rc2'
+    // https://mvnrepository.com/artifact/io.swagger/swagger-annotations
+    implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.5.0'
+
 }
 
 tasks.named('test') {
