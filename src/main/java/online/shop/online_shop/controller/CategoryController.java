@@ -16,20 +16,21 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public HttpEntity<?> addCategory(CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.addCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public HttpEntity<?> updateCategory(CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.updateCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/all")
     public HttpEntity<?> getAllCategories() {
         ApiResponse<?> apiResponse = categoryService.getAllCategories();
@@ -45,7 +46,7 @@ public class CategoryController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/get/{id}")
-    public HttpEntity<?> getCategoryById(@PathVariable Long id) {
+    public HttpEntity<ApiResponse<?>> getCategoryById(@PathVariable Long id) {
         ApiResponse<?> apiResponse = categoryService.getCategoryById(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
