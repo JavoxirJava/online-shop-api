@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
                 contact = @Contact(name = "It city academy", url = "http://itcityacademy.uz", email = "abdurahmonraimnazarov@gmail.com"),
                 license = @License(name = "Apache Foundation", url = "https://apache.org/")
         ),
-                security = {
-                        @SecurityRequirement(  name = "Bearer")
-                }
+        security = {
+                @SecurityRequirement(name = "Bearer")
+        }
 )
 @SecurityScheme(
         name = "Bearer",
