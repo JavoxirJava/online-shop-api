@@ -40,7 +40,7 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getAllCategories() {
-        return new ApiResponse<>(categoryRepository.findAll(), "", true);
+        return new ApiResponse<>(categoryRepository.findAll(), "Success", true);
     }
 
     public ApiResponse<?> deleteCategory(Long id) {
