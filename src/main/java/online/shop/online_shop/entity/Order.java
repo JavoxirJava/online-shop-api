@@ -19,5 +19,4 @@ public class Order {
     @Column(nullable = false)
     @ManyToOne
     private User user;
-
 }
