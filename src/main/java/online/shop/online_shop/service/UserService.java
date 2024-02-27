@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public ApiResponse<?> forLogin(AuthLoginDto loginDTO) {
-        User authUser = userRepository.findByPhoneNumberEquals(loginDTO.getPhoneNumber()).orElseThrow(() ->
+        User authUser = userRepository.findByIsActiveTrueAndPhoneNumber(loginDTO.getPhoneNumber()).orElseThrow(() ->
                 GenericNotFoundException.builder().message("User not found").statusCode(404).build());
         if (passwordEncoder.matches(loginDTO.getPassword(), authUser.getPassword())) {
             String token = jwtProvider.generateToken(loginDTO.getPhoneNumber());

@@ -38,6 +38,8 @@ public class User implements UserDetails {
     @ManyToOne
     private Role role;
 
+    private Boolean isActive = true;
+
 
     private boolean accountNonExpired = true ;
     private boolean accountNonLocked = true;
