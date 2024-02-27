@@ -13,6 +13,4 @@ import online.shop.online_shop.entity.template.AbsNameEntity;
 @Builder
 @Entity
 public class Category extends AbsNameEntity {
-
-
 }
