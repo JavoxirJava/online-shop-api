@@ -22,6 +22,17 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
+    public ProductDto getProduct(Product product){
+        return ProductDto.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .description(product.getDescription())
+                .categoryId(product.getCategory().getId())
+                .imageId(product.getImage() != null ? product.getImage().getId() : null)
+                .build();
+    }
+
     public ApiResponse<?> addProduct(ProductDto productDto) {
         if (productDto.getCategoryId() != null) {
             Optional<Category> byId = categoryRepository.findById(productDto.getCategoryId());
@@ -43,7 +54,7 @@ public class ProductService {
     public ApiResponse<?> getProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
-        return ApiResponse.builder().body(product).message("Success").success(true).build();
+        return ApiResponse.builder().body(getProduct(product)).message("Success").success(true).build();
     }
 
 

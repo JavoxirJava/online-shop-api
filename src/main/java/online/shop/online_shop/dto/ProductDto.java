@@ -3,6 +3,7 @@ package online.shop.online_shop.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import online.shop.online_shop.entity.Image;
 
 @Getter
 @Setter
@@ -24,6 +25,9 @@ public class ProductDto {
 
     @NotNull(message = "Product price cannot be null")
     private Double price;
+
+    @NotNull(message = "Product image cannot be null")
+    private Long imageId;
 
     @NotNull(message = "Product category cannot be null")
     private Long categoryId;
