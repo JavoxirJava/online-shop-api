@@ -24,14 +24,14 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args){
         if (initMode.equals("create-drop") || initMode.equals("create")) {
-            roleRepository.save(Role.builder().roleName(RoleName.ROLE_USER).build());
-            roleRepository.save(Role.builder().roleName(RoleName.ROLE_ADMIN).build());
+            roleRepository.save(Role.builder().roleName(RoleName.USER).build());
+            roleRepository.save(Role.builder().roleName(RoleName.ADMIN).build());
             User build = User.builder()
                     .firstName("Elnur")
                     .lastName("Nur")
                     .phoneNumber("992827734")
                     .email("elnur@gmail.com")
-                    .role(roleRepository.getByRoleName(RoleName.ROLE_ADMIN))
+                    .role(roleRepository.getByRoleName(RoleName.USER))
                     .password(passwordEncoder.encode("123"))
                     .build();
             userRepository.save(build);
