@@ -20,3 +20,4 @@ public class Order {
     @ManyToOne(optional = false)
     private User user;
 }
+

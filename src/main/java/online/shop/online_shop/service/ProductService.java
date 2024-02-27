@@ -4,6 +4,7 @@ import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.ProductDto;
 import online.shop.online_shop.entity.Category;
 import online.shop.online_shop.entity.Product;
+import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.CategoryRepository;
 import online.shop.online_shop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,19 @@ public class ProductService {
                 product.setName(productDto.getName());
                 product.setPrice(productDto.getPrice());
                 product.setDescription(productDto.getDescription());
-                product.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found")));
+                product.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElseThrow(()
+                        -> GenericNotFoundException.builder().message("Category not found").statusCode(404).build()));
                 productRepository.save(product);
                 return new ApiResponse<>("Product added", true);
             }
         }
         return new ApiResponse<>("Category not found", false);
+    }
+
+    public ApiResponse<?> getProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(()
+                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
+        return ApiResponse.builder().body(product).message("Success").success(true).build();
     }
 
 
