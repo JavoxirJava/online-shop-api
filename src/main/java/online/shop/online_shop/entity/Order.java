@@ -17,6 +17,6 @@ public class Order {
     @ManyToOne(optional = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 }
