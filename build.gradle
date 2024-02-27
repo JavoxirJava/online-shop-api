@@ -8,6 +8,7 @@ group = 'online-shop'
 version = '0.0.1-SNAPSHOT'
 java{
     sourceCompatibility = '17'
+
 }
 
 configurations {
@@ -28,7 +29,12 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 //    compileOnly 'org.projectlombok:lombok'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+//    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.security:spring-security-crypto'

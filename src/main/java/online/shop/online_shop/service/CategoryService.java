@@ -20,9 +20,9 @@ public class CategoryService {
     }
 
     public ApiResponse<?> addCategory(CategoryDto categoryDto) {
-        if (categoryRepository.existsByName(categoryDto.getName())) {
+        if (categoryRepository.existsByName(categoryDto.getName()))
             return new ApiResponse<>("Category already exist", false);
-        }else {
+        else {
             Category category = new Category();
             category.setName(categoryDto.getName());
             categoryRepository.save(category);
@@ -31,9 +31,9 @@ public class CategoryService {
     }
 
     public ApiResponse<?> updateCategory(CategoryDto categoryDto) {
-        if (!categoryRepository.existsById(categoryDto.getId())) {
+        if (!categoryRepository.existsById(categoryDto.getId()))
             return new ApiResponse<>("Category not found", false);
-        }else {
+        else {
             Category category = new Category();
             category.setId(categoryDto.getId());
             category.setName(categoryDto.getName());
@@ -43,24 +43,18 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getAllCategories() {
-        List<Category> allCategory = categoryRepository.getAllCategory();
-        return  ApiResponse.builder().body(
-                new ArrayList<>(allCategory.stream().map(Category::toString).toList())
-        ).build();
+        return new ApiResponse<>(categoryRepository.findAll(), "", true);
     }
 
     public ApiResponse<?> deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            return new ApiResponse<>("Category not found", false);
-        }else {
-            categoryRepository.deleteById(id);
-            return new ApiResponse<>("Category deleted", true);
-        }
+        categoryRepository.deleteById(id);
+        return new ApiResponse<>("Category deleted", true);
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
     Category category = categoryRepository.findById(id).orElseThrow(()
             -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
     return ApiResponse.builder().body(category).build();
+
     }
 }
