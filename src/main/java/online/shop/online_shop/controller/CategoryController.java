@@ -18,14 +18,14 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
-    public HttpEntity<?> addCategory(CategoryDto categoryDto) {
+    public HttpEntity<?> addCategory(@RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.addCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
-    public HttpEntity<?> updateCategory(CategoryDto categoryDto) {
+    public HttpEntity<?> updateCategory(@RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.updateCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
