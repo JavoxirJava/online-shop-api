@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 public class Basket {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +22,9 @@ public class Basket {
 
     @Column(nullable = false)
     private Long userId;
+
+    @Column(nullable = false)
+    private Long quantity;
 
     @CreationTimestamp
     @Column(nullable = false)

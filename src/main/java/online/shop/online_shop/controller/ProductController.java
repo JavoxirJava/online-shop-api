@@ -18,13 +18,16 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    public ProductController(ProductService productService) {
-//        this.productService = productService;
-//    }
 
     @PostMapping("/add")
     public HttpEntity<?> addProduct(@RequestBody @Valid ProductDto productDto) {
         ApiResponse<?> apiResponse = productService.addProduct(productDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
+    }
+
+    @GetMapping("/get/{id}")
+    public HttpEntity<?> getProduct(@PathVariable Long id) {
+        ApiResponse<?> apiResponse = productService.getProduct(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 }
