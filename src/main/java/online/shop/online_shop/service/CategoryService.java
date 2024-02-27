@@ -30,9 +30,7 @@ public class CategoryService {
         if (!categoryRepository.existsById(categoryDto.getId()))
             return new ApiResponse<>("Category not found", false);
         else {
-
-            Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow(() ->
-                    GenericNotFoundException.builder().message("not found").statusCode(404).build());
+            Category category = getOneCategory(categoryDto.getId());
             category.setName(categoryDto.getName());
             categoryRepository.save(category);
             return new ApiResponse<>("Category updated", true);
@@ -49,9 +47,11 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()
-                -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
-        return ApiResponse.builder().body(category).build();
+        return ApiResponse.builder().body(getOneCategory(id)).build();
+    }
 
+    public Category getOneCategory(Long id) {
+        return categoryRepository.findById(id).orElseThrow(()
+                -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
     }
 }
