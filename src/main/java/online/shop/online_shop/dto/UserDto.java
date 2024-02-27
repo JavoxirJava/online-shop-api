@@ -1,4 +1,4 @@
-package online.shop.online_shop.entity;
+package online.shop.online_shop.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

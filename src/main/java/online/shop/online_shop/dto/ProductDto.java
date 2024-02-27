@@ -1,13 +1,13 @@
 package online.shop.online_shop.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
 
     private Long id;
