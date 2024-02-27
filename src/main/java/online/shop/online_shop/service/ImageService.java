@@ -65,4 +65,9 @@ public class ImageService {
         imageRepository.delete(image);
         return new ApiResponse<>("Successfully deleted image", true);
     }
+
+    public Image getOneImage(Long imageId) {
+        return imageRepository.findById(imageId).orElseThrow(() ->
+                GenericNotFoundException.builder().message("Image not found").statusCode(404).build());
+    }
 }

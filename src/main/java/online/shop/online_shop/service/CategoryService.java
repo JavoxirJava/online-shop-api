@@ -7,6 +7,8 @@ import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CategoryService {
     final CategoryRepository categoryRepository;
@@ -52,7 +54,11 @@ public class CategoryService {
     }
 
     public Category getOneCategory(Long id) {
-        return categoryRepository.findById(id).orElseThrow(()
+        return getOneCategoryById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
+    }
+
+    public Optional<Category> getOneCategoryById(Long categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 }
