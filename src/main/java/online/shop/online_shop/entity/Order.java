@@ -8,15 +8,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@Entity(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     private Product product;
-    @Column(nullable = false)
+
     @ManyToOne
     private User user;
 }
