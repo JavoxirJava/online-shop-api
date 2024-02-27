@@ -30,4 +30,16 @@ public class ProductController {
         ApiResponse<?> apiResponse = productService.getProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
+
+    @PutMapping("/update")
+    public HttpEntity<?> updateProduct(@RequestBody @Valid ProductDto productDto) {
+        ApiResponse<?> apiResponse = productService.updateProduct(productDto);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public HttpEntity<?> deleteProduct(@PathVariable Long id) {
+        ApiResponse<?> apiResponse = productService.deleteProduct(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
 }

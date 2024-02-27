@@ -9,5 +9,5 @@ import online.shop.online_shop.entity.template.AbsNameEntity;
 @NoArgsConstructor
 @Builder
 @Entity
-public class WeightType extends AbsNameEntity {
+public class WeightType extends AbsNameEntity{
 }
