@@ -30,7 +30,8 @@ public class CategoryService {
         if (!categoryRepository.existsById(categoryDto.getId()))
             return new ApiResponse<>("Category not found", false);
         else {
-            Category category = getOneCategory(categoryDto.getId());
+            Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow(() ->
+                    GenericNotFoundException.builder().message("not found").statusCode(404).build());
             category.setName(categoryDto.getName());
             categoryRepository.save(category);
             return new ApiResponse<>("Category updated", true);
