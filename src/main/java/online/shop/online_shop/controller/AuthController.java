@@ -1,13 +1,12 @@
 package online.shop.online_shop.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.shop.online_shop.dto.AuthLoginDto;
-import online.shop.online_shop.entity.UserDto;
+import online.shop.online_shop.dto.UserDto;
 import online.shop.online_shop.service.UserService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

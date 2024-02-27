@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 public class CategoryService {
-
     final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {

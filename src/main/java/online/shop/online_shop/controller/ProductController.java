@@ -16,8 +16,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/add")
-    public HttpEntity<?> addProduct(@RequestParam ProductDto productDto, @PathVariable Long id) {
-        ApiResponse<?> apiResponse = productService.addProduct(productDto, id);
+    public HttpEntity<?> addProduct(@RequestParam ProductDto productDto) {
+        ApiResponse<?> apiResponse = productService.addProduct(productDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 }

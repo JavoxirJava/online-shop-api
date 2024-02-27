@@ -1,11 +1,10 @@
 package online.shop.online_shop.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.AuthLoginDto;
 import online.shop.online_shop.entity.User;
-import online.shop.online_shop.entity.UserDto;
+import online.shop.online_shop.dto.UserDto;
 import online.shop.online_shop.entity.enums.RoleName;
 import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.RoleRepository;
