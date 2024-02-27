@@ -1,5 +1,6 @@
 package online.shop.online_shop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
-
+    @Schema(hidden = true)
     private Long id;
 
     @NotNull(message = "Product name cannot be null")

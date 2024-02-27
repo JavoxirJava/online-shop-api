@@ -1,5 +1,6 @@
 package online.shop.online_shop.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import online.shop.online_shop.entity.Image;
@@ -11,7 +12,7 @@ import org.springframework.core.io.Resource;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageDto {
-
+    @Schema(hidden = true)
     private Long id;
 
     @NotNull(message = "Image name cannot be null")
