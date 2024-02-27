@@ -23,7 +23,7 @@ public class ProductController {
 //    }
 
     @PostMapping("/add")
-    public HttpEntity<ApiResponse<?>> addProduct(@RequestBody @Valid ProductDto productDto) {
+    public HttpEntity<?> addProduct(@RequestBody @Valid ProductDto productDto) {
         ApiResponse<?> apiResponse = productService.addProduct(productDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
