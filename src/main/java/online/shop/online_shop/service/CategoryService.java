@@ -48,9 +48,11 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()
-                -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
-        return ApiResponse.builder().body(category).build();
+        return ApiResponse.builder().body(getOneCategory(id)).build();
+    }
 
+    public Category getOneCategory(Long id) {
+        return categoryRepository.findById(id).orElseThrow(()
+                -> GenericNotFoundException.builder().message("not found").statusCode(404).build());
     }
 }
