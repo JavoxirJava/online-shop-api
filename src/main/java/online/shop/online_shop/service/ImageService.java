@@ -25,8 +25,7 @@ public class ImageService {
     final ImageRepository imageRepository;
 
     private static Integer count = 0;
-        public static final Path root = Paths.get("src/main/resources/img");
-//    public static final Path root = Paths.get("/root/image/");
+    public static final Path root = Paths.get("src/main/resources/img");
     public ApiResponse<?> upload(MultipartFile file) throws IOException {
         count++;
         Files.copy(file.getInputStream(), root.resolve("a" + count + file.getOriginalFilename()));

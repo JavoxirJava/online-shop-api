@@ -72,4 +72,10 @@ public class ProductService {
         return new ApiResponse<>("Category not found", false);
     }
 
+    public ApiResponse<?> deleteProduct(Long id) {
+        productRepository.findById(id).orElseThrow(()
+                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
+        productRepository.deleteById(id);
+        return new ApiResponse<>("Product deleted", true);
+    }
 }
