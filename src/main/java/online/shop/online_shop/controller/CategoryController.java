@@ -16,35 +16,35 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public HttpEntity<?> addCategory(@RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.addCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/update")
     public HttpEntity<?> updateCategory(@RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.updateCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/all")
     public HttpEntity<?> getAllCategories() {
         ApiResponse<?> apiResponse = categoryService.getAllCategories();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{id}")
     public HttpEntity<?> deleteCategory(@PathVariable Long id) {
         ApiResponse<?> apiResponse = categoryService.deleteCategory(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/get/{id}")
     public HttpEntity<ApiResponse<?>> getCategoryById(@PathVariable Long id) {
         ApiResponse<?> apiResponse = categoryService.getCategoryById(id);
