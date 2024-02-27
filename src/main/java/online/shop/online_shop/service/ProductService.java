@@ -5,7 +5,6 @@ import online.shop.online_shop.dto.ProductDto;
 import online.shop.online_shop.entity.Category;
 import online.shop.online_shop.entity.Product;
 import online.shop.online_shop.exception.GenericNotFoundException;
-import online.shop.online_shop.repository.CategoryRepository;
 import online.shop.online_shop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +14,16 @@ import java.util.Optional;
 public class ProductService {
 
     final ProductRepository productRepository;
-    final CategoryRepository categoryRepository;
+    final CategoryService categoryService;
+    final ImageService imageService;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, CategoryService categoryService, ImageService imageService) {
         this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
+        this.imageService = imageService;
     }
 
-    public ProductDto getProduct(Product product){
+    public ProductDto getProduct(Product product) {
         return ProductDto.builder()
                 .id(product.getId())
                 .name(product.getName())
@@ -35,15 +36,14 @@ public class ProductService {
 
     public ApiResponse<?> addProduct(ProductDto productDto) {
         if (productDto.getCategoryId() != null) {
-            Optional<Category> byId = categoryRepository.findById(productDto.getCategoryId());
+            Optional<Category> byId = categoryService.getOneCategoryById(productDto.getCategoryId());
             if (byId.isEmpty()) return new ApiResponse<>("Category not found", false);
             else {
                 Product product = new Product();
                 product.setName(productDto.getName());
                 product.setPrice(productDto.getPrice());
                 product.setDescription(productDto.getDescription());
-                product.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElseThrow(()
-                        -> GenericNotFoundException.builder().message("Category not found").statusCode(404).build()));
+                product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
                 productRepository.save(product);
                 return new ApiResponse<>("Product added", true);
             }
@@ -57,5 +57,19 @@ public class ProductService {
         return ApiResponse.builder().body(getProduct(product)).message("Success").success(true).build();
     }
 
+    public ApiResponse<?> updateProduct(ProductDto productDto) {
+        if (productDto.getCategoryId() != null) {
+            Product product = productRepository.findById(productDto.getId()).orElseThrow(()
+                    -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
+            product.setName(productDto.getName());
+            product.setPrice(productDto.getPrice());
+            product.setDescription(productDto.getDescription());
+            if (productDto.getCategoryId() != null)  product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
+            if (productDto.getImageId() != null) product.setImage(imageService.getOneImage(productDto.getImageId()));
+            productRepository.save(product);
+            return new ApiResponse<>("Product updated", true);
+        }
+        return new ApiResponse<>("Category not found", false);
+    }
 
 }
