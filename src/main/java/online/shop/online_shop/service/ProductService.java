@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
+
 @Service
 public class ProductService {
 
@@ -71,7 +73,6 @@ public class ProductService {
         }
         return new ApiResponse<>("Category not found", false);
     }
-
     public ApiResponse<?> deleteProduct(Long id) {
         productRepository.findById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
