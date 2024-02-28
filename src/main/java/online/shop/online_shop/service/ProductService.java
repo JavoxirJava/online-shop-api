@@ -71,6 +71,7 @@ public class ProductService {
         productRepository.save(product);
         return new ApiResponse<>("Product updated", true);
     }
+
     public ApiResponse<?> deleteProduct(Long id) {
         productRepository.deleteById(id);
         return new ApiResponse<>("Product deleted", true);
