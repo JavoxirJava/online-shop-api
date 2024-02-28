@@ -14,8 +14,6 @@ public class OrderDto {
     private Long id;
     @NotNull(message = "Product id cannot be null")
     private Long productId;
-    @NotNull(message = "Quantity cannot be null")
-    private Long quantity;
     @NotNull(message = "User id cannot be null")
     private Long userId;
 }

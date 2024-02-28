@@ -52,7 +52,7 @@ public class ProductService {
         return new ApiResponse<>("Category id is required", false);
     }
 
-    public ApiResponse<Object> getProduct(Long id) {
+    public ApiResponse<?> getProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
         return ApiResponse.builder().body(getProduct(product)).message("Success").success(true).build();

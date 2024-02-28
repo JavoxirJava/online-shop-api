@@ -2,14 +2,12 @@ package online.shop.online_shop.controller;
 
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.OrderDto;
+import online.shop.online_shop.security.CurrentUser;
 import online.shop.online_shop.service.OrderService;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
@@ -20,9 +18,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/add")
-    public HttpEntity<?> addOrder(@RequestBody OrderDto orderDto){
-        ApiResponse<?> apiResponse = orderService.addOrder(orderDto);
+    @PostMapping("/liked/{productId}")
+    public HttpEntity<?> liked(@CurrentUser Long userId, @PathVariable Long productId){
+        ApiResponse<?> apiResponse = orderService.addOrder(userId, productId);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 }
