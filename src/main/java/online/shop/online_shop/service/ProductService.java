@@ -16,12 +16,14 @@ public class ProductService {
 
     final ProductRepository productRepository;
     final CategoryService categoryService;
-    final ImageService imageService;
 
-    public ProductService(ProductRepository productRepository, CategoryService categoryService, ImageService imageService) {
+    final ImageService imageService;
+    final WeightTypeService weightTypeService;
+    public ProductService(ProductRepository productRepository, CategoryService categoryService, ImageService imageService, WeightTypeService weightTypeService) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
         this.imageService = imageService;
+        this.weightTypeService = weightTypeService;
     }
 
     public ProductDto getProduct(Product product) {
@@ -45,6 +47,8 @@ public class ProductService {
                 product.setPrice(productDto.getPrice());
                 product.setDescription(productDto.getDescription());
                 product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
+                product.setImage(imageService.getOneImage(productDto.getImageId()));
+                product.setWeightType(weightTypeService.getOneWeightType(productDto.getWeightTypeId()));
                 productRepository.save(product);
                 return new ApiResponse<>("Product added", true);
             }
