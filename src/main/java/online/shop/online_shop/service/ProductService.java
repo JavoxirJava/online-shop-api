@@ -48,7 +48,7 @@ public class ProductService {
                 return new ApiResponse<>("Product added", true);
             }
         }
-        return new ApiResponse<>("Category not found", false);
+        return new ApiResponse<>("Category id is required", false);
     }
 
     public ApiResponse<?> getProduct(Long id) {
@@ -58,23 +58,19 @@ public class ProductService {
     }
 
     public ApiResponse<?> updateProduct(ProductDto productDto) {
-        if (productDto.getCategoryId() != null) {
-            Product product = productRepository.findById(productDto.getId()).orElseThrow(()
-                    -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
-            product.setName(productDto.getName());
-            product.setPrice(productDto.getPrice());
-            product.setDescription(productDto.getDescription());
-            if (productDto.getCategoryId() != null)  product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
-            if (productDto.getImageId() != null) product.setImage(imageService.getOneImage(productDto.getImageId()));
-            productRepository.save(product);
-            return new ApiResponse<>("Product updated", true);
-        }
-        return new ApiResponse<>("Category not found", false);
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(()
+                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        if (productDto.getCategoryId() != null)
+            product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
+        if (productDto.getImageId() != null) product.setImage(imageService.getOneImage(productDto.getImageId()));
+        productRepository.save(product);
+        return new ApiResponse<>("Product updated", true);
     }
 
     public ApiResponse<?> deleteProduct(Long id) {
-        productRepository.findById(id).orElseThrow(()
-                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
         productRepository.deleteById(id);
         return new ApiResponse<>("Product deleted", true);
     }
