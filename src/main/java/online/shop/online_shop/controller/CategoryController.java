@@ -1,5 +1,6 @@
 package online.shop.online_shop.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.CategoryDto;
@@ -19,7 +20,7 @@ public class CategoryController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public HttpEntity<?> addCategory(@RequestBody CategoryDto categoryDto) {
+    public HttpEntity<?> addCategory( @Valid  @RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.addCategory(categoryDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }

@@ -17,6 +17,10 @@ public class BasketDto {
     @NotNull(message = "Product id can not be null")
     private Long productId;
 
+    @Schema(example = "1")
+    @NotNull(message = "Quantity can not be null")
+    private Long quantity;
+
     @NotNull(message = "User id can not be null")
     private Long userId;
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
+
 @Service
 public class ProductService {
 
@@ -69,7 +71,6 @@ public class ProductService {
         productRepository.save(product);
         return new ApiResponse<>("Product updated", true);
     }
-
     public ApiResponse<?> deleteProduct(Long id) {
         productRepository.deleteById(id);
         return new ApiResponse<>("Product deleted", true);
