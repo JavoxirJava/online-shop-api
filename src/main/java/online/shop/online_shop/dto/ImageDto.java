@@ -26,7 +26,4 @@ public class ImageDto {
 
     private Resource resource;
     private Image image;
-
-    public ImageDto(Long id, String name, String contentType, Long size, Resource resource) {
-    }
 }

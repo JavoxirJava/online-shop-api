@@ -48,7 +48,8 @@ public class ImageService {
                 image.getName(),
                 image.getContentType(),
                 image.getSize(),
-                resource
+                resource,
+                image
         );
     }
 

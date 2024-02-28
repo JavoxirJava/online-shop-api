@@ -20,7 +20,7 @@ public class ImageController {
     final ImageService imageService;
 
     @ApiParam(allowMultiple = true)
-    @PostMapping(value = "/upload",consumes = {"multipart/form-data"})
+    @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     public HttpEntity<?> upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
         ApiResponse<?> upload = imageService.upload(file);
         return ResponseEntity.status(HttpStatus.CREATED).body(upload);
@@ -31,20 +31,19 @@ public class ImageController {
         ImageDto file = imageService.getFile(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.valueOf(file.getImage().getContentType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
                         + file.getName())
                 .body(file.getResource());
     }
 
     @ApiParam(allowMultiple = true)
-    @PutMapping(value = "/{id}",consumes =  {"multipart/form-data"})
+    @PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
     public Long editFile(@PathVariable Long id, @RequestParam(value = "file") MultipartFile file) throws IOException {
         return imageService.editImage(id, file);
     }
 
-
     @DeleteMapping("/{id}")
-    public HttpEntity<?> deleteAttachment(@PathVariable Long id ){
+    public HttpEntity<?> deleteAttachment(@PathVariable Long id) {
         ApiResponse<?> apiResponse = imageService.deleteImage(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(apiResponse);
     }
