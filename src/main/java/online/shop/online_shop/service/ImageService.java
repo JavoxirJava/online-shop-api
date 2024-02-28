@@ -26,7 +26,6 @@ public class ImageService {
 
     private static Integer count = 0;
         public static final Path root = Paths.get("src/main/resources/img");
-//    public static final Path root = Paths.get("/root/image/");
 
     public ApiResponse<?> upload(MultipartFile file) throws IOException {
         count++;
@@ -48,7 +47,8 @@ public class ImageService {
                 image.getName(),
                 image.getContentType(),
                 image.getSize(),
-                resource
+                resource,
+                image
         );
     }
     public Long editImage(Long id, MultipartFile file) throws IOException {

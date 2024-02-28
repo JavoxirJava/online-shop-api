@@ -23,9 +23,9 @@ public class AuthController {
     @PostMapping( "/register")
     public HttpEntity<?> registration(
             @Valid @RequestBody UserDto user,
-            @Parameter(name = "ROLE", description = "Role:  ROLE_USER", required = true,
+            @Parameter(name = "ROLE", description = "Role: ROLE_USER, ROLE_ADMIN", required = true,
                     schema = @Schema(type = "string",
-                    allowableValues = {"USER", "ADMIN" }))
+                    allowableValues = {"ROLE_USER", "ROLE_ADMIN" }))
             @RequestParam(name = "ROLE", required = false) String role)  {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.forRegister(user, role));
     }
