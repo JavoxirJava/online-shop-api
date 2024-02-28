@@ -42,4 +42,16 @@ public class ProductController {
         ApiResponse<?> apiResponse = productService.deleteProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
+
+    @GetMapping("/get-product-list-by-category-id/{id}")
+    public HttpEntity<?> getProductListByCategoryId(@PathVariable Long id) {
+        ApiResponse<?> apiResponse = productService.getProductListByCategoryId(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
+
+    @GetMapping("/get-products-list")
+    public HttpEntity<?> getProductsList() {
+        ApiResponse<?> apiResponse = productService.getProductsList();
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
 }

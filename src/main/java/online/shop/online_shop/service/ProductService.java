@@ -8,9 +8,8 @@ import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-
-import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
 
 @Service
 public class ProductService {
@@ -53,10 +52,11 @@ public class ProductService {
         return new ApiResponse<>("Category id is required", false);
     }
 
-    public ApiResponse<?> getProduct(Long id) {
+    public ApiResponse<Object> getProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
         return ApiResponse.builder().body(getProduct(product)).message("Success").success(true).build();
+
     }
 
     public ApiResponse<?> updateProduct(ProductDto productDto) {
@@ -75,5 +75,15 @@ public class ProductService {
     public ApiResponse<?> deleteProduct(Long id) {
         productRepository.deleteById(id);
         return new ApiResponse<>("Product deleted", true);
+    }
+
+    public ApiResponse<?> getProductListByCategoryId(Long categoryId){
+        List<Product> allByCategoryId = productRepository.findAllByCategoryId(categoryId);
+        return new ApiResponse<>(allByCategoryId, "Success", true);
+    }
+
+    public ApiResponse<?> getProductsList() {
+        List<ProductRepository.ProductDtos> productDtos = productRepository.productList();
+        return new ApiResponse<>(productDtos, "Success", true);
     }
 }
