@@ -25,7 +25,9 @@ public class ImageService {
     final ImageRepository imageRepository;
 
     private static Integer count = 0;
-        public static final Path root = Paths.get("src/main/resources/img");
+
+    public static final Path root = Paths.get("src/main/resources/image");
+
 
     public ApiResponse<?> upload(MultipartFile file) throws IOException {
         count++;
@@ -51,6 +53,7 @@ public class ImageService {
                 image
         );
     }
+
     public Long editImage(Long id, MultipartFile file) throws IOException {
         Image image = imageRepository.findById(id).orElseThrow(() ->
                 GenericNotFoundException.builder().message("Image id not found").statusCode(404).build());
@@ -60,6 +63,7 @@ public class ImageService {
         image.setContentType(file.getContentType());
         return imageRepository.save(image).getId();
     }
+
     public ApiResponse<?> deleteImage(Long id) {
         Image image = imageRepository.findById(id).orElseThrow(() ->
                 GenericNotFoundException.builder().message("Image not found").statusCode(404).build());
