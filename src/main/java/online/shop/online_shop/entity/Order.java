@@ -17,8 +17,6 @@ public class Order {
     @ManyToOne(optional = false)
     private Product product;
 
-    private Long quantity;
-
     @ManyToOne(optional = false)
     private User user;
 }
