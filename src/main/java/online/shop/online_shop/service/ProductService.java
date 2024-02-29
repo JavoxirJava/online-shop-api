@@ -63,8 +63,8 @@ public class ProductService {
 
     }
 
-    public ApiResponse<?> updateProduct(ProductDto productDto) {
-        Product product = productRepository.findById(productDto.getId()).orElseThrow(()
+    public ApiResponse<?> updateProduct(ProductDto productDto, Long id) {
+        Product product = productRepository.findById(id).orElseThrow(()
                 -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());

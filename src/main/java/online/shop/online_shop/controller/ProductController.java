@@ -31,25 +31,25 @@ public class ProductController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PutMapping("/update")
-    public HttpEntity<?> updateProduct(@RequestBody @Valid ProductDto productDto) {
-        ApiResponse<?> apiResponse = productService.updateProduct(productDto);
+    @PutMapping("/{id}")
+    public HttpEntity<?> updateProduct(@RequestBody @Valid ProductDto productDto, @PathVariable Long id) {
+        ApiResponse<?> apiResponse = productService.updateProduct(productDto, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpEntity<?> deleteProduct(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.deleteProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @GetMapping("/get-product-list-by-category-id/{id}")
+    @GetMapping("/by/category/{id}")
     public HttpEntity<?> getProductListByCategoryId(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProductListByCategoryId(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @GetMapping("/get-products-list")
+    @GetMapping("/list")
     public HttpEntity<?> getProductsList() {
         ApiResponse<?> apiResponse = productService.getProductsList();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
