@@ -36,4 +36,9 @@ public class BasketController {
     public HttpEntity<?> getBasket(@PathVariable Long id) {
         return ResponseEntity.ok(basketService.getBasket(id));
     }
+
+    @GetMapping("/all")
+    public HttpEntity<?> getAllBaskets(@CurrentUser User user) {
+        return ResponseEntity.ok(basketService.getAllBaskets(user.getId()));
+    }
 }
