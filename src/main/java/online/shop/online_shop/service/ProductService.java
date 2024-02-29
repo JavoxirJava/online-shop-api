@@ -48,7 +48,8 @@ public class ProductService {
                 product.setPrice(productDto.getPrice());
                 product.setDescription(productDto.getDescription());
                 product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
-                product.setImage(imageService.getOneImage(productDto.getImageId()));
+                if (productDto.getImageId() == 0) product.setImage(null);
+                else  product.setImage(imageService.getOneImage(productDto.getImageId()));
                 product.setWeightType(weightTypeService.getOneWeightType(productDto.getWeightTypeId()));
                 productRepository.save(product);
                 return new ApiResponse<>("Product added", true);

@@ -6,6 +6,7 @@ import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.ImageDto;
 import online.shop.online_shop.service.ImageService;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,12 +21,13 @@ public class ImageController {
     final ImageService imageService;
 
     @ApiParam(allowMultiple = true)
+    @PreAuthorize(value = "hasAuthority('ROLE_ADMIN')")
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     public HttpEntity<?> upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
         ApiResponse<?> upload = imageService.upload(file);
         return ResponseEntity.status(HttpStatus.CREATED).body(upload);
     }
-
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @GetMapping("/getFile/{id}")
     public HttpEntity<?> getFile(@PathVariable Long id) throws MalformedURLException {
         ImageDto file = imageService.getFile(id);
@@ -36,12 +38,14 @@ public class ImageController {
                 .body(file.getResource());
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @ApiParam(allowMultiple = true)
     @PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
     public Long editFile(@PathVariable Long id, @RequestParam(value = "file") MultipartFile file) throws IOException {
         return imageService.editImage(id, file);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public HttpEntity<?> deleteAttachment(@PathVariable Long id) {
         ApiResponse<?> apiResponse = imageService.deleteImage(id);

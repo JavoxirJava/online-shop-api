@@ -6,6 +6,7 @@ import online.shop.online_shop.dto.ProductDto;
 import online.shop.online_shop.service.ProductService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,36 +20,42 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @PostMapping("/add")
     public HttpEntity<?> addProduct(@RequestBody @Valid ProductDto productDto) {
         ApiResponse<?> apiResponse = productService.addProduct(productDto);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
     @GetMapping("/{id}")
     public HttpEntity<?> getProduct(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
     @GetMapping
     public HttpEntity<?> getProductList() {
         ApiResponse<?> apiResponse = productService.getProductsList();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @PutMapping("/{id}")
     public HttpEntity<?> updateProduct(@RequestBody @Valid ProductDto productDto, @PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.updateProduct(productDto, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public HttpEntity<?> deleteProduct(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.deleteProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
     @GetMapping("/by/category/{id}")
     public HttpEntity<?> getProductListByCategoryId(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProductListByCategoryId(id);
