@@ -17,8 +17,18 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    @GetMapping
+    public HttpEntity<?> getAllCategories() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
+    }
 
-    @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping("/{id}")
+    public HttpEntity<ApiResponse<?>> getCategoryById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
+
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public HttpEntity<?> addCategory( @Valid  @RequestBody CategoryDto categoryDto) {
         ApiResponse<?> apiResponse = categoryService.addCategory(categoryDto);
@@ -26,29 +36,15 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/update")
-    public HttpEntity<?> updateCategory(@RequestBody CategoryDto categoryDto) {
-        ApiResponse<?> apiResponse = categoryService.updateCategory(categoryDto);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
-    }
-
-    @GetMapping("/all")
-    public HttpEntity<?> getAllCategories() {
-        ApiResponse<?> apiResponse = categoryService.getAllCategories();
+    @PutMapping("/{id}")
+    public HttpEntity<?> updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Long id) {
+        ApiResponse<?> apiResponse = categoryService.updateCategory(categoryDto, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpEntity<?> deleteCategory(@PathVariable Long id) {
-        ApiResponse<?> apiResponse = categoryService.deleteCategory(id);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/get/{id}")
-    public HttpEntity<ApiResponse<?>> getCategoryById(@PathVariable Long id) {
-        ApiResponse<?> apiResponse = categoryService.getCategoryById(id);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+        return ResponseEntity.ok(categoryService.deleteCategory(id));
     }
 }

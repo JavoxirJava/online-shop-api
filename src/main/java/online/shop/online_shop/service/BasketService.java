@@ -16,16 +16,14 @@ public class BasketService {
     private final BasketRepository basketRepository;
 
 
-    public ApiResponse<?> create(BasketDto basketDto) {
-        Basket basket = basketDto(basketDto, new Basket());
-        basketRepository.save(basket);
+    public ApiResponse<?> create(BasketDto basketDto, Long userId) {
+        basketDto.setUserId(userId);
+        basketRepository.save(basketDto(basketDto, new Basket()));
         return new ApiResponse<>("Basket created", true);
     }
 
     public ApiResponse<?> getBasket(Long id){
-        Basket basket = basketRepository.findById(id).orElseThrow(() ->
-                GenericNotFoundException.builder().message("Basket id not found").statusCode(404).build());
-        return new ApiResponse<>(basket, "Successfully", true);
+        return new ApiResponse<>(getBasketById(id), "Successfully", true);
     }
 
     public ApiResponse<?> deleteBasket(Long id) {
@@ -34,10 +32,7 @@ public class BasketService {
     }
 
     public ApiResponse<?> editBasket(BasketDto basketDto, Long id) {
-        Basket basket = basketRepository.findById(id).orElseThrow(() ->
-                GenericNotFoundException.builder().message("Basket id not found").statusCode(404).build());
-        Basket editBasket = basketDto(basketDto, basket);
-        basketRepository.save(editBasket);
+        basketRepository.save(basketDto(basketDto, getBasketById(id)));
         return new ApiResponse<>("Basket edited", true);
     }
 
@@ -46,6 +41,11 @@ public class BasketService {
         basket.setQuantity(basketDto.getQuantity());
         basket.setUserId(basketDto.getUserId());
         return basket;
+    }
+
+    public Basket getBasketById(Long id){
+        return basketRepository.findById(id).orElseThrow(() ->
+                GenericNotFoundException.builder().message("Basket id not found").statusCode(404).build());
     }
 
 }

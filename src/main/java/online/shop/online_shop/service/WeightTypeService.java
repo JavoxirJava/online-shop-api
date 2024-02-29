@@ -16,6 +16,10 @@ public class WeightTypeService {
         this.weightTypeRepository = weightTypeRepository;
     }
 
+    public ApiResponse<?> getWeightTypeList() {
+        return ApiResponse.builder().body(weightTypeRepository.findAll()).message("Success").success(true).build();
+    }
+
     public ApiResponse<?> addWeightType(WeightTypeDto weightTypeDto) {
         if (weightTypeRepository.existsByName(weightTypeDto.getName()))
             return new ApiResponse<>("Weight type already exists", false);
@@ -29,7 +33,9 @@ public class WeightTypeService {
         return ApiResponse.builder().body(getOneWeightType(id)).message("Success").success(true).build();
     }
 
-    public ApiResponse<?> updateWeightType(WeightTypeDto weightTypeDto){
+    public ApiResponse<WeightType> updateWeightType(WeightTypeDto weightTypeDto, Long id){
+        if (!weightTypeRepository.existsById(id))
+            return new ApiResponse<>("Weight type not found", false);
         WeightType weightType = getOneWeightType(weightTypeDto.getId());
         weightType.setName(weightTypeDto.getName());
         weightTypeRepository.save(weightType);

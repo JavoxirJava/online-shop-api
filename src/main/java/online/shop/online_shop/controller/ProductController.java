@@ -25,9 +25,15 @@ public class ProductController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public HttpEntity<?> getProduct(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProduct(id);
+        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
+    }
+
+    @GetMapping
+    public HttpEntity<?> getProductList() {
+        ApiResponse<?> apiResponse = productService.getProductsList();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
@@ -46,12 +52,6 @@ public class ProductController {
     @GetMapping("/by/category/{id}")
     public HttpEntity<?> getProductListByCategoryId(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProductListByCategoryId(id);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
-    }
-
-    @GetMapping("/list")
-    public HttpEntity<?> getProductsList() {
-        ApiResponse<?> apiResponse = productService.getProductsList();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 }

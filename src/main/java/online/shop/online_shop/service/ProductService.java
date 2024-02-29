@@ -19,6 +19,7 @@ public class ProductService {
 
     final ImageService imageService;
     final WeightTypeService weightTypeService;
+
     public ProductService(ProductRepository productRepository, CategoryService categoryService, ImageService imageService, WeightTypeService weightTypeService) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
@@ -57,15 +58,11 @@ public class ProductService {
     }
 
     public ApiResponse<?> getProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(()
-                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
-        return ApiResponse.builder().body(getProduct(product)).message("Success").success(true).build();
-
+        return ApiResponse.builder().body(getProduct(getProductOne(id))).message("Successfully get").success(true).build();
     }
 
     public ApiResponse<?> updateProduct(ProductDto productDto, Long id) {
-        Product product = productRepository.findById(id).orElseThrow(()
-                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
+        Product product = getProductOne(id);
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setDescription(productDto.getDescription());
@@ -81,7 +78,7 @@ public class ProductService {
         return new ApiResponse<>("Product deleted", true);
     }
 
-    public ApiResponse<?> getProductListByCategoryId(Long categoryId){
+    public ApiResponse<?> getProductListByCategoryId(Long categoryId) {
         List<Product> allByCategoryId = productRepository.findAllByCategoryId(categoryId);
         return new ApiResponse<>(allByCategoryId, "Success", true);
     }
@@ -89,5 +86,10 @@ public class ProductService {
     public ApiResponse<?> getProductsList() {
         List<ProductRepository.ProductDtos> productDtos = productRepository.productList();
         return new ApiResponse<>(productDtos, "Success", true);
+    }
+
+    public Product getProductOne(Long id) {
+        return productRepository.findById(id).orElseThrow(()
+                -> GenericNotFoundException.builder().message("Product not found").statusCode(404).build());
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class WeightTypeController {
 
     private final WeightTypeService weightTypeService;
+
     public WeightTypeController(WeightTypeService weightTypeService) {
         this.weightTypeService = weightTypeService;
     }
@@ -23,20 +24,24 @@ public class WeightTypeController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @GetMapping("/get/{id}")
-    public HttpEntity<?> getWeightType(@PathVariable Long id){
-        ApiResponse<?> apiResponse = weightTypeService.getWeightType(id);
+    @GetMapping
+    public HttpEntity<?> getWeightTypeList() {
+        return ResponseEntity.ok(weightTypeService.getWeightTypeList());
+    }
+
+    @GetMapping("/{id}")
+    public HttpEntity<?> getWeightType(@PathVariable Long id) {
+        return ResponseEntity.ok(weightTypeService.getWeightType(id));
+    }
+
+    @PutMapping("/{id}")
+    public HttpEntity<?> updateWeightType(@RequestBody WeightTypeDto weightTypeDto, @PathVariable Long id) {
+        ApiResponse<?> apiResponse = weightTypeService.updateWeightType(weightTypeDto, id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PutMapping("/update")
-    public HttpEntity<?> updateWeightType(@RequestBody WeightTypeDto weightTypeDto){
-        ApiResponse<?> apiResponse = weightTypeService.updateWeightType(weightTypeDto);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public HttpEntity<?> deleteWeightType(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public HttpEntity<?> deleteWeightType(@PathVariable Long id) {
         ApiResponse<?> apiResponse = weightTypeService.deleteWeightType(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }

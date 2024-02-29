@@ -7,6 +7,7 @@ import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,19 +29,17 @@ public class CategoryService {
         }
     }
 
-    public ApiResponse<?> updateCategory(CategoryDto categoryDto) {
-        if (!categoryRepository.existsById(categoryDto.getId()))
-            return new ApiResponse<>("Category not found", false);
+    public ApiResponse<?> updateCategory(CategoryDto categoryDto, Long id) {
+        if (!categoryRepository.existsById(id)) return new ApiResponse<>("Category not found", false);
         else {
-            Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow(() ->
-                    GenericNotFoundException.builder().message("not found").statusCode(404).build());
+            Category category = getOneCategory(id);
             category.setName(categoryDto.getName());
             categoryRepository.save(category);
             return new ApiResponse<>("Category updated", true);
         }
     }
 
-    public ApiResponse<?> getAllCategories() {
+    public ApiResponse<List<Category>> getAllCategories() {
         return new ApiResponse<>(categoryRepository.findAll(), "Success", true);
     }
 
