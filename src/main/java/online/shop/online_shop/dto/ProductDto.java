@@ -26,7 +26,7 @@ public class ProductDto {
     @NotNull(message = "Product price cannot be null")
     private Double price;
 
-    @NotNull(message = "Product image cannot be null")
+//    @NotNull(message = "Product image cannot be null")
     private Long imageId;
 
     @NotNull(message = "Product category cannot be null")

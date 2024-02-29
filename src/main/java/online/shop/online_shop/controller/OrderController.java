@@ -8,6 +8,7 @@ import online.shop.online_shop.service.OrderService;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
     @PostMapping("/liked/{productId}")
     public HttpEntity<?> liked(@CurrentUser User user , @PathVariable Long productId){
         ApiResponse<?> apiResponse = orderService.addOrder(user.getId(), productId);
