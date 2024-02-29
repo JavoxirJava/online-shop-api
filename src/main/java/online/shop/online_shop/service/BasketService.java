@@ -48,4 +48,8 @@ public class BasketService {
                 GenericNotFoundException.builder().message("Basket id not found").statusCode(404).build());
     }
 
+    public ApiResponse<?> getAllBaskets(Long userId) {
+        return new ApiResponse<>(basketRepository.findAllByUserId(userId), "Successfully", true);
+    }
+
 }

@@ -2,6 +2,7 @@ package online.shop.online_shop.controller;
 
 import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.OrderDto;
+import online.shop.online_shop.entity.User;
 import online.shop.online_shop.security.CurrentUser;
 import online.shop.online_shop.service.OrderService;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
@@ -19,8 +20,8 @@ public class OrderController {
     }
 
     @PostMapping("/liked/{productId}")
-    public HttpEntity<?> liked(@CurrentUser Long userId, @PathVariable Long productId){
-        ApiResponse<?> apiResponse = orderService.addOrder(userId, productId);
+    public HttpEntity<?> liked(@CurrentUser User user , @PathVariable Long productId){
+        ApiResponse<?> apiResponse = orderService.addOrder(user.getId(), productId);
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 }
