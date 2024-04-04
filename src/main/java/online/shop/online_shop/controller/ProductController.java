@@ -27,21 +27,18 @@ public class ProductController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public HttpEntity<?> getProduct(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProduct(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public HttpEntity<?> getProductList() {
         ApiResponse<?> apiResponse = productService.getProductsList();
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/search/{text}")
     public HttpEntity<?> searchProduct(@PathVariable String text) {
         return ResponseEntity.ok(productService.searchProduct(text));
@@ -61,7 +58,6 @@ public class ProductController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/by/category/{id}")
     public HttpEntity<?> getProductListByCategoryId(@PathVariable Long id) {
         ApiResponse<?> apiResponse = productService.getProductListByCategoryId(id);

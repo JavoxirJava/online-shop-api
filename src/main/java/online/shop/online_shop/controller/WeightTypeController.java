@@ -26,13 +26,11 @@ public class WeightTypeController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 201 : 409).body(apiResponse);
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public HttpEntity<?> getWeightTypeList() {
         return ResponseEntity.ok(weightTypeService.getWeightTypeList());
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public HttpEntity<?> getWeightType(@PathVariable Long id) {
         return ResponseEntity.ok(weightTypeService.getWeightType(id));

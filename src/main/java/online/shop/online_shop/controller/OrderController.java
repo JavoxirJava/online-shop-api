@@ -21,7 +21,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/liked/{productId}")
     public HttpEntity<?> liked(@CurrentUser User user , @PathVariable Long productId){
         ApiResponse<?> apiResponse = orderService.addOrder(user.getId(), productId);
