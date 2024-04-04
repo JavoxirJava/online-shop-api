@@ -70,8 +70,7 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setDescription(productDto.getDescription());
-        if (productDto.getCategoryId() != null)
-            product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
+        if (productDto.getCategoryId() != null) product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
         if (productDto.getImageId() != null) product.setImage(imageService.getOneImage(productDto.getImageId()));
         productRepository.save(product);
         return new ApiResponse<>("Product updated", true);
