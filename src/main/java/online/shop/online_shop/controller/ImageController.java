@@ -27,7 +27,7 @@ public class ImageController {
         ApiResponse<?> upload = imageService.upload(file);
         return ResponseEntity.status(HttpStatus.CREATED).body(upload);
     }
-    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole( 'ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/getFile/{id}")
     public HttpEntity<?> getFile(@PathVariable Long id) throws MalformedURLException {
         ImageDto file = imageService.getFile(id);

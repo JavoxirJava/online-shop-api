@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import online.shop.online_shop.dto.ApiResponse;
 import online.shop.online_shop.dto.AuthLoginDto;
 import online.shop.online_shop.dto.UserDto;
 import online.shop.online_shop.service.UserService;
@@ -32,7 +33,7 @@ public class AuthController {
 
     @PostMapping( "/login")
     public HttpEntity<?> login(@Valid @RequestBody AuthLoginDto loginDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.forLogin(loginDTO));
+        ApiResponse<?> apiResponse = userService.forLogin(loginDTO);
+        return ResponseEntity.status(apiResponse.isSuccess() ? HttpStatus.OK : HttpStatus.CONFLICT).body(apiResponse);
     }
-
 }

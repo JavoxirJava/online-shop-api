@@ -49,7 +49,7 @@ public class CategoryService {
     }
 
     public ApiResponse<?> getCategoryById(Long id) {
-        return ApiResponse.builder().body(getOneCategory(id)).build();
+        return ApiResponse.builder().body(getOneCategory(id)).success(true).build();
     }
 
     public Category getOneCategory(Long id) {

@@ -13,10 +13,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p.name as name, p.image.id as image, p.price as price from Product p ")
     List<ProductDtos> productList();
+
+    @Query("select p from Product p where p.name like concat('%', ?1 ,'%')")
+    List<Product> searchProduct(String text);
     interface ProductDtos {
         String getName();
         String getImage();
         Double getPrice();
-
     }
 }

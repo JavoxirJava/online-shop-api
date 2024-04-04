@@ -27,6 +27,10 @@ public class ProductService {
         this.weightTypeService = weightTypeService;
     }
 
+    public List<Product> searchProduct(String text) {
+        return productRepository.searchProduct(text);
+    }
+
     public ProductDto getProduct(Product product) {
         return ProductDto.builder()
                 .id(product.getId())
@@ -34,28 +38,27 @@ public class ProductService {
                 .price(product.getPrice())
                 .description(product.getDescription())
                 .categoryId(product.getCategory().getId())
+                .weightTypeId(product.getWeightType().getId())
                 .imageId(product.getImage() != null ? product.getImage().getId() : null)
                 .build();
     }
 
     public ApiResponse<?> addProduct(ProductDto productDto) {
-        if (productDto.getCategoryId() != null) {
-            Optional<Category> byId = categoryService.getOneCategoryById(productDto.getCategoryId());
-            if (byId.isEmpty()) return new ApiResponse<>("Category not found", false);
-            else {
-                Product product = new Product();
-                product.setName(productDto.getName());
-                product.setPrice(productDto.getPrice());
-                product.setDescription(productDto.getDescription());
-                product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
-                if (productDto.getImageId() == 0) product.setImage(null);
-                else  product.setImage(imageService.getOneImage(productDto.getImageId()));
-                product.setWeightType(weightTypeService.getOneWeightType(productDto.getWeightTypeId()));
-                productRepository.save(product);
-                return new ApiResponse<>("Product added", true);
-            }
+        if (productDto.getWeightTypeId() == null) return new ApiResponse<>("Weight type id is required", false);
+        if (productDto.getCategoryId() == null) return new ApiResponse<>("Category id is required", false);
+        Optional<Category> byId = categoryService.getOneCategoryById(productDto.getCategoryId());
+        if (byId.isEmpty()) return new ApiResponse<>("Category not found", false);
+        else {
+            Product product = new Product();
+            product.setName(productDto.getName());
+            product.setPrice(productDto.getPrice());
+            product.setDescription(productDto.getDescription());
+            product.setImage(productDto.getImageId() == 0 ? null : imageService.getOneImage(productDto.getImageId()));
+            product.setCategory(categoryService.getOneCategory(productDto.getCategoryId()));
+            product.setWeightType(weightTypeService.getOneWeightType(productDto.getWeightTypeId()));
+            productRepository.save(product);
+            return new ApiResponse<>("Product added", true);
         }
-        return new ApiResponse<>("Category id is required", false);
     }
 
     public ApiResponse<?> getProduct(Long id) {

@@ -2,9 +2,7 @@ package online.shop.online_shop.service;
 
 import lombok.RequiredArgsConstructor;
 import online.shop.online_shop.dto.ApiResponse;
-import online.shop.online_shop.dto.OrderDto;
 import online.shop.online_shop.entity.Order;
-import online.shop.online_shop.exception.GenericNotFoundException;
 import online.shop.online_shop.repository.OrderRepository;
 import online.shop.online_shop.repository.ProductRepository;
 import online.shop.online_shop.repository.UserRepository;

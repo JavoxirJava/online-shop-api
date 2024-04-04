@@ -18,31 +18,31 @@ public class BasketController {
         this.basketService = basketService;
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping
     public HttpEntity<?> create(@RequestBody BasketDto basketDto, @CurrentUser User user) {
         return ResponseEntity.ok(basketService.create(basketDto, user.getId()));
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @PutMapping("/{id}")
     public HttpEntity<?> edit(@RequestBody BasketDto basketDto, @PathVariable Long id) {
         return ResponseEntity.ok(basketService.editBasket(basketDto, id));
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public HttpEntity<?> delete(@PathVariable Long id) {
         return ResponseEntity.ok(basketService.deleteBasket(id));
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     public HttpEntity<?> getBasket(@PathVariable Long id) {
         return ResponseEntity.ok(basketService.getBasket(id));
     }
 
-    @PreAuthorize("hasAnyRole( 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole( 'ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/all")
     public HttpEntity<?> getAllBaskets(@CurrentUser User user) {
         return ResponseEntity.ok(basketService.getAllBaskets(user.getId()));
